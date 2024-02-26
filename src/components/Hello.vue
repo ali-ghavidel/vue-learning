@@ -1,13 +1,18 @@
 <template>
-        <h1>ali</h1>
+    <div>
+        <h1>{{ name }} {{ family }}</h1>
         <br>
-        <p>ghavidel</p>
+        <p>{{ age }}</p>
+    </div>
 </template>
 <script>
 export default {
-    setup() {
-        
+    props: {
+        name: String,
+        family: String,
+        age: Number
     },
+    methods: {},
 }
 </script>
 <style scoped>
