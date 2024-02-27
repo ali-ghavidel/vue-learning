@@ -3,8 +3,8 @@
     <AppHeader></AppHeader>
     <main>
       <AddTodo @addTodoItem="addTodoItem"></AddTodo>
-      <todo-list :todos="todos" @deleteTodo="deleteTodoItem" @changeDone="changeDoneItem"></todo-list>
-      <FilterTodo></FilterTodo>
+      <todo-list :sorted="sorted" @deleteTodo="deleteTodoItem" @changeDone="changeDoneItem" @dragStart="dragStart" @dragEnd="dragEnd"></todo-list>
+      <filter-todo @deleteCompleted="deleteCompletedItems" :notCompleteCounter="notCompleteCounter" @getFilter="sortTodos" :filter="filter"></filter-todo>
     </main>
     <AppFooter></AppFooter>
   </div>
@@ -21,7 +21,9 @@ import TodoItem from './components/todo/TodoItem.vue'
 export default {
   data() {
     return {
-      todos: []
+      todos: [],
+      dragging: -1,
+      filter: 'active',
     }
   },
   name: 'App',
@@ -33,7 +35,29 @@ export default {
     FilterTodo,
     TodoItem
   },
+  computed: {
+    notCompleteCounter(){
+      return this.todos.filter((item)=>item.done === false).length;
+    },
+    sorted(){
+      switch (this.filter) {
+        case 'all':
+          return this.todos;
+        case 'active':
+          return this.todos.filter((item)=>item.done === false);
+        case 'completed':
+          return this.todos.filter((item)=>item.done === true);
+      
+        default:
+          return this.todos;
+      }
+    }
+  },
   methods: {
+    sortTodos(filter){
+      this.filter = filter;
+      // console.log(this.filter);
+    },
     addTodoItem(title) {
       const newTodo = {
         id: this.todos.length + 1,
@@ -41,10 +65,8 @@ export default {
         title: title
       }
       this.todos.push(newTodo)
-      console.log(this.todos)
     },
     deleteTodoItem(id) {
-      console.log(id)
       this.todos = this.todos.filter((item) => item.id != id)
     },
     changeDoneItem(id,done){
@@ -52,9 +74,20 @@ export default {
       const selected = newTodos.find((item)=>item.id === id);
       selected.done = done;
       this.todos = newTodos;
-    }
-  },
-  watch: {}
+    },
+    deleteCompletedItems(){
+      let newTodos = [...this.todos];
+      newTodos = newTodos.filter((item)=>item.done !== true)
+      this.todos = newTodos;
+    },
+    dragStart(index){
+      this.dragging = index;
+    },
+    dragEnd(index){
+      let newTodo = this.todos.splice(this.dragging,1)[0];
+      this.todos.splice(index,0,newTodo);
+    },
+  }
 }
 </script>
 <style></style>

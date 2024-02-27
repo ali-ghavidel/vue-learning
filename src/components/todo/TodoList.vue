@@ -1,6 +1,15 @@
 <template>
   <ul class="todos">
-    <TodoItem v-for="todo in todos" :key="todo.item" :todo="todo" @deleteTodo="deleteTodo" @changeDone="changeDone" />
+    <TodoItem
+    v-for="(todo,index) in sorted"
+    :key="index"
+    :todo="todo"
+    @deleteTodo="deleteTodo"
+    @changeDone="changeDone"
+    @dragover.prevent
+    @dragstart="dragStart(index)"
+    @drop="dragged(index)"
+    />
   </ul>
 </template>
 
@@ -11,7 +20,7 @@ export default {
     TodoItem
   }, 
   props: {
-    todos: Array,
+    sorted: Array,
   },
   methods: {
     deleteTodo(id){
@@ -19,6 +28,12 @@ export default {
     },
     changeDone(id,done){
       this.$emit("changeDone",id,done)
+    },
+    dragStart(index){
+      this.$emit('dragStart', index)
+    },
+    dragged(index){
+      this.$emit('dragEnd',index)
     }
   }
 }

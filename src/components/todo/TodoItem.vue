@@ -1,8 +1,8 @@
 <template>
   <li class="card" draggable="true">
-    <div class="cb-container"  @click="changeDone">
+    <div class="cb-container" @click="changeDone">
       <input type="checkbox" class="cb-input" :checked="todo.done ? true : null" />
-      <span class="check"></span>
+      <span v-if="todo.done" class="check"></span>
     </div>
     <p class="item">{{ todo.title }}</p>
     <button class="clear" @click="deleteTodo">
@@ -20,7 +20,7 @@ export default {
     deleteTodo() {
       this.$emit('deleteTodo', this.todo.id)
     },
-    changeDone(){
+    changeDone() {
       this.$emit('changeDone', this.todo.id, !this.todo.done)
     }
   }
