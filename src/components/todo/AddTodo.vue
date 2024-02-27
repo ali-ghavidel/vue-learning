@@ -21,10 +21,11 @@
 </template>
 
 <script>
+
 export default {
   data() {
     return {
-      todoTitle: ""
+      todoTitle: "",
     }
   },
   methods: {
