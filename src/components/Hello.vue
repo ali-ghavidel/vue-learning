@@ -1,8 +1,10 @@
 <template>
     <div>
-        <h1 @click="handleH1">{{ name }} {{ family }}</h1>
+        <h1>{{ name }} {{ family }}</h1>
         <br>
         <p>{{ age }}</p>
+        <p><slot name="header"></slot></p>
+        <p><slot></slot></p>
     </div>
 </template>
 <script>
@@ -15,7 +17,6 @@ export default {
     methods: {
         handleH1(){
             alert(this.name);
-            this.$emit("childClicked",this.name,this.family)
         }
     },
 }
