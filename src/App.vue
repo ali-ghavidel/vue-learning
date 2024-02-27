@@ -1,52 +1,35 @@
 <template>
-  <div>
-    <img src="./assets/logo.svg" alt="logo" ref="img" />
-    <h1 @click="test">salam</h1>
-    <br />
-    <input type="text" :value="firstName" ref="fname" />
-    <input type="submit" @click="test" />
-    <br/>
-    <p ref="pfname"></p>
-    <p>new: {{ firstName }}</p>
-    <br />
-    <!-- <Hello :name="firstName" :family="lastName" :age="20" ref="alertRef">
-      <template v-slot:header>
-        header is there
-      </template>
-      test
-    </Hello> -->
-  </div>
+  <AppHeader></AppHeader>
+  <main>
+    <AddTodo></AddTodo>
+    <TodoList></TodoList>
+    <FilterTodo></FilterTodo>
+  </main>
+  <AppFooter></AppFooter>
 </template>
 
 <script>
-import Hello from './components/Hello.vue'
+import AddTodo from './components/todo/AddTodo.vue';
+import AppFooter from './components/AppFooter.vue';
+import AppHeader from './components/AppHeader.vue';
+import TodoList from './components/todo/TodoList.vue';
+import FilterTodo from './components/todo/FilterTodo.vue';
 
 export default {
   data() {
-    return {
-      firstName: 'Ali',
-      lastName: 'Ghavidel'
-    }
+    return {}
   },
   name: 'App',
-  // components: {
-  //   Hello
-  // },
-  methods: {
-    test() {
-      // console.log("testify "+ par1+ " " +par2);
-      this.$refs.img.classList.add('testClass')
-      // this.$refs.alertRef.handleH1()
-      this.firstName = this.$refs.fname.value; 
-    }
+  components: {
+    AppHeader,
+    AppFooter,
+    AddTodo,
+    TodoList,
+    FilterTodo
+
   },
-  watch:{
-    firstName(newValue, oldValue){
-      console.log("old: ", oldValue);
-      console.log("new: ", newValue);
-      this.$refs.pfname.innerText = "old: " + oldValue;
-    }
-  }
+  methods: {},
+  watch: {}
 }
 </script>
 <style></style>
