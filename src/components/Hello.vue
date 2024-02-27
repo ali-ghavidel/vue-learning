@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>{{ name }} {{ family }}</h1>
+        <h1 @click="handleH1">{{ name }} {{ family }}</h1>
         <br>
         <p>{{ age }}</p>
     </div>
@@ -12,7 +12,12 @@ export default {
         family: String,
         age: Number
     },
-    methods: {},
+    methods: {
+        handleH1(){
+            alert(this.name);
+            this.$emit("childClicked",this.name,this.family)
+        }
+    },
 }
 </script>
 <style scoped>
