@@ -8,12 +8,22 @@
   </div>
 </template>
 
-<script setup>
+<script>
 import Hello from './components/Hello.vue';
-import { ref } from 'vue';
 
-const firstName = ref("Ali");
-const lastName = ref("Ghavidel");
+export default {
+  data(){
+    return {
+      firstName: "Ali",
+      lastName: "Ghavidel"
+    }
+  },
+  name: "App",
+  components: {
+    Hello,
+  },
+}
+
 </script>
 <style>
 
